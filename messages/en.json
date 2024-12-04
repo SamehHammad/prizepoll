@@ -1,0 +1,32 @@
+
+{
+  "navigation": {
+    "service": "Service",
+    "withdraw": "Withdraw",
+    "invite": "Invite",
+    "recharge": "Recharge"
+  },
+  "balance": {
+    "title": "Balance",
+    "frozen": "Frozen"
+  },
+  "vip": {
+    "membershipArea": "Membership Area",
+    "paymentPeriod": "Payment Period",
+    "section": "Section"
+  },
+  "members": {
+    "news": "Member News",
+    "membership": "Membership"
+  },
+  "bottomNav": {
+    "home": "Home",
+    "recharge": "Recharge",
+    "points": "Points",
+    "ranking": "Ranking",
+    "userCenter": "User Center"
+  },
+  "partners": {
+    "title": "Partners"
+  }
+}

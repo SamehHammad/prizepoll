@@ -1,0 +1,31 @@
+{
+  "navigation": {
+    "service": "الخدمة",
+    "withdraw": "الإنسحاب",
+    "invite": "دعوة",
+    "recharge": "إعادة الشحن"
+  },
+  "balance": {
+    "title": "التوازن",
+    "frozen": "مجمد"
+  },
+  "vip": {
+    "membershipArea": "منطقة العضوية",
+    "paymentPeriod": "فترة الدفع",
+    "section": "القسم"
+  },
+  "members": {
+    "news": "أخبار الأعضاء",
+    "membership": "العضوية"
+  },
+  "bottomNav": {
+    "home": "الصفحة الرئيسية",
+    "recharge": "إعادة الشحن",
+    "points": "النقاط",
+    "ranking": "ترتيب",
+    "userCenter": "مركز المستخدم"
+  },
+  "partners": {
+    "title": "الشريك"
+  }
+}
