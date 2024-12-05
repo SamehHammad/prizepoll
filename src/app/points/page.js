@@ -1,9 +1,69 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { HomeIcon, CreditCardIcon, BoltIcon, DocumentTextIcon, UserIcon } from '@heroicons/react/24/outline';
+import { Card } from '@/components/ui/card';
+
+const adsItems = [
+  {
+    id: 1,
+    title: 'مكافأة إعلانية 1',
+    description: 'انقر للحصول على نقاط إضافية',
+    points: 100,
+  },
+  {
+    id: 2,
+    title: 'مكافأة إعلانية 2',
+    description: 'انقر للحصول على نقاط إضافية',
+    points: 150,
+  },
+  {
+    id: 3,
+    title: 'مكافأة إعلانية 3',
+    description: 'انقر للحصول على نقاط إضافية',
+    points: 200,
+  },
+  {
+    id: 4,
+    title: 'مكافأة إعلانية 4',
+    description: 'انقر للحصول على نقاط إضافية',
+    points: 250,
+  },
+];
 
 export default function PointsPage() {
+  const [selectedAd, setSelectedAd] = useState(null);
+  const [isAdLoaded, setIsAdLoaded] = useState(false);
+
+  useEffect(() => {
+    if (selectedAd) {
+      setIsAdLoaded(false);
+      const timer = setTimeout(() => {
+        try {
+          const adElement = document.querySelector('.adsbygoogle');
+          if (adElement && window.adsbygoogle) {
+            adElement.innerHTML = '';
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          }
+        } catch (error) {
+          console.error('Error loading ad:', error);
+        }
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [selectedAd]);
+
+  const handleAdClick = (ad) => {
+    setSelectedAd(ad);
+  };
+
+  const closeAdPopup = () => {
+    setSelectedAd(null);
+    setIsAdLoaded(false);
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 pb-20">
       {/* Header */}
@@ -62,8 +122,76 @@ export default function PointsPage() {
               also frozen.
             </p>
           </div>
+
+          {/* Ads Section */}
+          <div className="mt-8">
+            <h2 className="text-right mb-4 text-gray-800">اربح نقاط إضافية</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {adsItems.map((ad) => (
+                <Card
+                  key={ad.id}
+                  className="p-4 cursor-pointer hover:shadow-lg transition-all duration-300"
+                  onClick={() => handleAdClick(ad)}
+                >
+                  <div className="space-y-2 text-right">
+                    <h2 className="text-lg font-semibold">{ad.title}</h2>
+                    <p className="text-gray-600">{ad.description}</p>
+                    <p className="text-orange-500 font-medium">+{ad.points} نقطة</p>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Ad Popup */}
+      {selectedAd && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={closeAdPopup}>
+          <div className="bg-white rounded-lg w-full max-w-md p-4 relative" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={closeAdPopup}
+              className="absolute top-2 left-2 text-gray-500 hover:text-gray-700 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
+            >
+              ✕
+            </button>
+            <div className="text-right mb-4">
+              <h2 className="text-xl font-semibold">{selectedAd.title}</h2>
+              <p className="text-gray-600 mb-2">{selectedAd.description}</p>
+              <p className="text-orange-500 font-medium">+{selectedAd.points} نقطة</p>
+            </div>
+            <div className="mt-4 bg-gray-50 rounded-lg flex items-center justify-center relative" style={{ minHeight: '250px' }}>
+              {!isAdLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
+                  <div className="text-center text-gray-500">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-2"></div>
+                    <p>جاري تحميل الإعلان...</p>
+                  </div>
+                </div>
+              )}
+              <div style={{ width: '300px', height: '250px' }}>
+                <ins
+                  className="adsbygoogle"
+                  style={{ display: 'block', width: '300px', height: '250px' }}
+                  data-ad-client="ca-pub-6928751647092861"
+                  data-ad-slot="1994234353"
+                  data-ad-format="rectangle"
+                  data-full-width-responsive="false"
+                  onLoad={() => setIsAdLoaded(true)}
+                />
+              </div>
+            </div>
+            <div className="mt-4 text-center">
+              <button 
+                className="bg-orange-400 text-white px-6 py-2 rounded-lg hover:bg-orange-500 transition-colors"
+                onClick={closeAdPopup}
+              >
+                إغلاق
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around items-center py-2 px-4">
