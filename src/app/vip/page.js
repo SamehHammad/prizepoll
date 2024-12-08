@@ -20,7 +20,6 @@ export default function VIPPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <BackButton />
       <Slider />
       <TopNav />
       <div className="container mx-auto px-4">
